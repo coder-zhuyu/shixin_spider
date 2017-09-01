@@ -6,6 +6,7 @@
 import requests
 from random import choice
 import time
+import pymongo
 from pymongo import MongoClient
 
 from agents import AGENTS_ALL
@@ -63,6 +64,8 @@ def main():
         client = MongoClient(mongo_host, mongo_port)
         db = client['credit']
         collection = db['shixin']
+        collection.ensure_index([('iname', pymongo.ASCENDING), ('cardNum', pymongo.ASCENDING)],
+                                name='uk_name_card', unique=True)
     except Exception as e:
         print(e)
         return
